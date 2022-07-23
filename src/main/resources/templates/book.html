@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Book Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="card mb-3" style="max-width: 800xpx;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light"  style="padding-bottom: 20px">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Better Reads</a>
+
+            </div>
+        </nav>
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img th:src="${coverImage}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title display-1" th:text="${book.name}">Book Name</h5>
+                    <p class="card-text display-5" th:text="${book.authorNames}">Author Name</p>
+                    <p class="card-text" th:text="${book.description}">Book Description</p>
+                    <p class="card-text" th:text="${book.publishedDate}">Published Date: <small class="text-muted">2022-07-19</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
