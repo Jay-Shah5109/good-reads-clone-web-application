@@ -20,7 +20,7 @@ public class BookController {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
-            String coverImgURL = "/src/main/resources/static/images/no_img.png";
+            String coverImgURL = "/images/no_img.png";
             if (book.getCoverIDs() != null && book.getCoverIDs().size() > 0) {
                 coverImgURL = COVER_IMG_ROOT + book.getCoverIDs().get(0) + "-L.jpg";
             }
