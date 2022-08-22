@@ -2,6 +2,7 @@ package io.betterreadsapp.search;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class SearchController {
 
     private final WebClient webClient;
+    private final String COVER_IMG_ROOT = "http://covers.openlibrary.org/b/id/";
 
 //  Used builder design pattern here
     public SearchController(WebClient.Builder webClientBuilder) {
@@ -34,7 +36,17 @@ public class SearchController {
         List<SearchResultBook> books  = result.getDocs()
                 .stream()
                 .limit(10)
-                .collect(Collectors.toList());
+                .map(bookResult -> {
+                    bookResult.setKey(bookResult.getKey().replace("/works/", ""));
+                    String coverID = bookResult.getCover_i();
+                    if (StringUtils.hasText(coverID)) {
+                        coverID = COVER_IMG_ROOT + coverID + "-M.jpg";
+                    } else {
+                        coverID = "/images/no_img.png";
+                    }
+                    bookResult.setCover_i(coverID);
+                    return bookResult;
+                }).collect(Collectors.toList());
         model.addAttribute("searchResults", books);
         return "search";
     }
